@@ -30,6 +30,13 @@ header {
   justify-content: space-between;
 }
 
+.navbar .menu-btn {
+  display: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
 .navbar .logo {
   display: flex;
   gap: 10px;
@@ -52,6 +59,16 @@ header {
   display: flex;
   list-style: none;
   gap: 35px;
+}
+
+.navbar .links .close-btn {
+  display: none;
+  color: #000;
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 1.5rem;
 }
 
 .navbar .links a {
@@ -77,13 +94,41 @@ header {
   background: #fff;
 }
 
+.blur-bg-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  backdrop-filter: blur(5px);
+  transition: 0.1s ease;
+}
+
+.show-popup .blur-bg-overlay {
+  opacity: 1;
+  pointer-events: none;
+}
+
 .form-popup {
   position: fixed;
   top: 50%;
   left: 50%;
+  max-width: 720px;
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
   background: #fff;
   border: 2px solid #fff;
+  transform: translate(-50%, -100%);
+}
+
+.show-popup .form-popup {
+  opacity: 1;
+  pointer-events: auto;
   transform: translate(-50%, -50%);
+  transition: transform 0.3s ease, opacity 0.1s;
 }
 
 .form-popup .close-btn {
@@ -107,11 +152,21 @@ header {
   width: 100%;
   color: #fff;
   display: flex;
+  padding: 0 20px;
   text-align: center;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.login .form-details {
   background: url("./images/login-img.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.signup .form-details {
+  background: url("./images/signup-img.jpg");
   background-size: cover;
   background-position: center;
 }
@@ -177,7 +232,7 @@ form .input-field label {
   text-decoration: underline;
 }
 
-.form-box .forgot-pass {
+.form-box :where(.forgot-pass, .policy-text) {
   display: inline-flex;
   margin-top: 14px;
   font-style: 0.95rem;
@@ -203,4 +258,81 @@ form button:hover {
 }
 .form-box .bottom-link {
   text-align: center;
+}
+
+.form-popup .signup,
+.form-popup.show-signup .login {
+  display: none;
+}
+
+.form-popup.show-signup .signup {
+  display: flex;
+}
+
+.signup .policy-text {
+  display: flex;
+  align-items: center;
+}
+
+.signup .policy-text input {
+  width: 14px;
+  height: 14px;
+  margin-right: 7px;
+}
+
+@media (max-width: 950px) {
+  .navbar :is(.menu-btn, .links .close-btn) {
+    display: block;
+  }
+
+  .navbar {
+    padding: 15px 0;
+  }
+
+  .navbar .logo h2 {
+    font-size: 1.4rem;
+  }
+
+  .navbar .links {
+    position: fixed;
+    left: -100%;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    display: block;
+    padding-top: 60px;
+    text-align: center;
+    background: #fff;
+    transition: 0.2s ease;
+  }
+
+  .navbar .links.show-menu {
+    left: 0;
+  }
+
+  .navbar .links a {
+    color: #000;
+    display: inline-flex;
+    margin: 20px 0;
+    font-size: 1.2rem;
+  }
+
+  .navbar .login-btn {
+    font-size: 0.9rem;
+    padding: 7px 10px;
+  }
+}
+
+@media (max-width: 760px) {
+  .form-popup {
+    width: 95%;
+  }
+
+  .form-box .form-details {
+    display: none;
+  }
+
+  .form-box .form-content {
+    padding: 30px 20px;
+  }
 }
